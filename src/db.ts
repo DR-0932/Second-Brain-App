@@ -1,6 +1,10 @@
 import mongoose from "mongoose";
+import {model,Schema} from "mongoose";
 
-const MONGO_URI = process.env.MONGO_URI as string;
+
+const MONGO_URI = process.env.MONGO_URI;
+console.log("MONGO_URI:", process.env.MONGO_URI);
+
 
 if(!MONGO_URI){
   throw new Error("MONGO_URI not defined");
@@ -14,12 +18,9 @@ mongoose
   process.exit(1);
 });
 
-const userSchema = new mongoose.Schema({
-  email:{type:String, requiredd: true, unique: true},
+const userSchema = new Schema({
   username:{type:String, required:true,unique:true},
   password:{type:String,required:true}
 });
 
-const userModel = mongoose.model("User",userSchema);
-
-module.exports = {userModel};
+export const userModel = model("User",userSchema);
